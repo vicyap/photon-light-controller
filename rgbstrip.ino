@@ -14,16 +14,11 @@ public:
         analogWrite(_pin, 0, _freq);
     }
 
-    // only allow values between [0, 1.0]
-    void setDuty(float v) {
-        if (v < 0) {
-            v = 0;
-        }
-        else if (v > 1) {
-            v = 1;
-        }
-
-        analogWrite(_pin, 255 * v);
+    // only allow values between 0 and 100
+    void setDuty(int v) {
+        v = constrain(v, 0, 100); // make sure v is between 0 and 100
+        v = map(v, 0, 100, 0, 255); // remap to 0, 255
+        analogWrite(_pin, v);
     }
 
 
@@ -50,19 +45,6 @@ void setup() {
 
 /* LOOP */
 void loop() {
-    redDuty = redDuty + 0.2;
-    blueDuty = blueDuty + 0.3;
-
-    if (redDuty > 1) {
-        redDuty -= 1;
-    }
-
-    if (blueDuty > 1) {
-        blueDuty -= 1;
-    }
-
-    blue.setDuty(blueDuty);
-    red.setDuty(redDuty);
-    delay(400);
+   delay(400);
 
 }
