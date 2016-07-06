@@ -19,9 +19,10 @@ private:
 
     void _toggle();
 
+    const static int PERIOD = 1000;
+    const static int BRIGHTNESS = 128;
+
     bool _isOn;
-    int _period;
-    int _brightness;
     Timer _timer;
 };
 

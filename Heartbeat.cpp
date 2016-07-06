@@ -2,9 +2,7 @@
 
 Heartbeat::Heartbeat() :
 _isOn(false),
-_period(1000),
-_brightness(128),
-_timer(_period, &Heartbeat::_toggle, *this)
+_timer(PERIOD, &Heartbeat::_toggle, *this)
 {}
 
 void Heartbeat::_toggle() {
@@ -13,7 +11,7 @@ void Heartbeat::_toggle() {
 		_isOn = false;
 	}
 	else {
-		RGB.brightness(_brightness);
+		RGB.brightness(BRIGHTNESS);
 		_isOn = true;
 	}
 }
