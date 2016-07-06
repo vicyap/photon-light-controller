@@ -1,5 +1,10 @@
-# comment
+# INO
 rgbstrip.ino
 
+# HEADERS
 Heartbeat.h
+Led.h
+
+# CPP FILES
 Heartbeat.cpp
+Led.cpp
