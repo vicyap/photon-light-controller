@@ -8,12 +8,11 @@ _timer(PERIOD, &Heartbeat::_toggle, *this)
 void Heartbeat::_toggle() {
 	if (_isOn) {
 		RGB.brightness(0);
-		_isOn = false;
 	}
 	else {
 		RGB.brightness(BRIGHTNESS);
-		_isOn = true;
 	}
+	_isOn = !_isOn;
 }
 
 void Heartbeat::start() {
