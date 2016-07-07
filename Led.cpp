@@ -10,8 +10,7 @@ _timer(100, &Led::toggle, *this)
 }
 
 void Led::setDuty(int v) {
-    v = constrain(v, 0, 100); // make sure v is between 0 and 100
-    v = map(v, 0, 100, 0, 255); // remap to 0, 255
+    v = constrain(v, 0, 255); // make sure v is between 0 and 255
 	_duty = v;
 	_isOn = (_duty == 0);
     analogWrite(_pin, v, SWITCH_FREQ);
