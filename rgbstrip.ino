@@ -10,7 +10,9 @@
 
 /* VARIABLES */
 Led red(D0);
-Rgb strip(D0, D1, D2);
+Led green(D1);
+Led blue(D2);
+#define FADESPEED 5
 
 /* FUNCTIONS */
 
@@ -21,13 +23,36 @@ void setup() {
 
 /* LOOP */
 void loop() {
-    strip.setColor(Color::BLUE);
-    delay(3000);
-    strip.setColor(Color::GREEN);
-    delay(3000);
-    strip.setColor(Color::RED);
-    delay(3000);
-    strip.setColor(200, 0, 150);
-    delay(3000);
 
+	int r, g, b;
+    // fade from blue to violet
+    for (r = 0; r < 256; r++) { 
+        red.setDuty(r);
+        delay(FADESPEED);
+    } 
+    // fade from violet to red
+    for (b = 255; b > 0; b--) { 
+        blue.setDuty(b);;
+        delay(FADESPEED);
+    } 
+    // fade from red to yellow
+    for (g = 0; g < 256; g++) { 
+        green.setDuty(g);
+        delay(FADESPEED);
+    } 
+    // fade from yellow to green
+    for (r = 255; r > 0; r--) { 
+        red.setDuty(r);;
+        delay(FADESPEED);
+    } 
+    // fade from green to teal
+    for (b = 0; b < 256; b++) { 
+        blue.setDuty(b);
+        delay(FADESPEED);
+    } 
+    // fade from teal to blue
+    for (g = 255; g > 0; g--) { 
+        green.setDuty(g);
+        delay(FADESPEED);
+    } 
 }
