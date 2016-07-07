@@ -17,7 +17,7 @@ namespace Color {
     } Color;
 
 
-    const static Color WHITE(255, 255, 255);
+    const static Color WHITE(255, 255, 255); // RGB Strips can't produce white, you need RGBW
     const static Color BLACK(0, 0, 0);
     const static Color RED(255, 0, 0);
     const static Color GREEN(0, 255, 0);
