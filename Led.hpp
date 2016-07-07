@@ -9,7 +9,7 @@ public:
 	Led (int pin);
 
 	void setDuty(int);
-	void strobeFreq(float);
+	void strobeFreq(double);
     void strobeOn();
     void strobeOff();
     

@@ -2,9 +2,11 @@
 rgbstrip.ino
 
 # HEADERS
-Heartbeat.h
-Led.h
+convert.hpp
+Heartbeat.hpp
+Led.hpp
 
 # CPP FILES
+convert.cpp
 Heartbeat.cpp
 Led.cpp

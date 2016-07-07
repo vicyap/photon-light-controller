@@ -1,4 +1,4 @@
-#include "Heartbeat.h"
+#include "Heartbeat.hpp"
 
 Heartbeat::Heartbeat() :
 _isOn(false),
