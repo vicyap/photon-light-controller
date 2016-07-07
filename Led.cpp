@@ -18,6 +18,7 @@ void Led::setDuty(int v) {
 }
 
 void Led::strobeFreq(double freq) {
+    freq = freq * 2; // multiple by 2 to account for on/off
     freq = constrain(freq, 0, 65535);
     int p = 1000.0 / freq;
     _timer.changePeriod(p);
