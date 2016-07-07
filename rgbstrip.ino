@@ -2,24 +2,32 @@
 
 #include "application.h"
 
+#include "Color.hpp"
 #include "convert.hpp"
 #include "Heartbeat.hpp"
 #include "Led.hpp"
+#include "Rgb.hpp"
 
 /* VARIABLES */
 Led red(D0);
-double freq;
+Rgb strip(D0, D1, D2);
 
 /* FUNCTIONS */
 
 /* SETUP */
 void setup() {
     Heartbeat::instance().start();
-    red.strobeFreq(convert::bpmToFreq<double>(128));
-    red.strobeOn();
 }
 
 /* LOOP */
 void loop() {
+    strip.setColor(Color::BLUE);
+    delay(3000);
+    strip.setColor(Color::GREEN);
+    delay(3000);
+    strip.setColor(Color::RED);
+    delay(3000);
+    strip.setColor(200, 0, 150);
+    delay(3000);
 
 }
