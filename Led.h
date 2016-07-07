@@ -8,8 +8,13 @@ public:
 
 	Led (int pin);
 
-	void setDuty(int v);
-	void strobe(int f);
+	void setDuty(int);
+	void strobeFreq(float);
+    void strobeOn();
+    void strobeOff();
+    
+    void on();
+    void off();
     void toggle();
 
 private:
@@ -18,6 +23,7 @@ private:
 	int _pin;
     int _duty;
     bool _isOn;
+    Timer _timer;
 };
 
 #endif

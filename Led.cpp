@@ -3,10 +3,10 @@
 Led::Led(int pin) :
 _pin (pin),
 _duty(0),
-_isOn (false)
+_isOn (false),
+_timer(100, &Led::toggle, *this)
 {
 	pinMode(_pin, OUTPUT);
-	analogWrite(_pin, 0, SWITCH_FREQ);
 }
 
 void Led::setDuty(int v) {
@@ -17,18 +17,37 @@ void Led::setDuty(int v) {
     analogWrite(_pin, v, SWITCH_FREQ);
 }
 
-void Led::strobe(int freq) {
+void Led::strobeFreq(float freq) {
     freq = constrain(freq, 0, 65535);
-    analogWrite(_pin, _duty, freq);
+    int p = 1000.0 / freq;
+    _timer.changePeriod(p);
+}
+
+void Led::strobeOn() {
+    _timer.start();
+}
+
+void Led::strobeOff() {
+    _timer.stop();
+    off();
+}
+
+void Led::on() {
+    digitalWrite(_pin, HIGH);
+    _isOn = true;
+}
+
+void Led::off() {
+    digitalWrite(_pin, LOW);
+    _isOn = false;
 }
 
 void Led::toggle() {
 	if (_isOn) {
-		analogWrite(_pin, 0);
-		_isOn = false;
+        on();
 	}
 	else {
-		analogWrite(_pin, _duty);
-		_isOn = true;
+        off();
 	}
+    _isOn = !_isOn;
 }

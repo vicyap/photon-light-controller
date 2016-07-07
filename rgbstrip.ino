@@ -7,20 +7,24 @@
 
 /* VARIABLES */
 Led red(D0);
+float freq;
 
 /* FUNCTIONS */
 
 /* SETUP */
 void setup() {
     Heartbeat::instance().start();
+    freq = 1;
 }
 
 /* LOOP */
 void loop() {
+    red.strobeOff();
+    delay(1000);
+    red.strobeFreq(freq);
+    freq += 0.5;
+    red.strobeOn();
+    delay(1000);
 
-    red.strobe(8);
-    delay(2000);
-    red.setDuty(75);
-    delay(2000);
 
 }
