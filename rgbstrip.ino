@@ -5,6 +5,7 @@
 #include "Color.hpp"
 #include "convert.hpp"
 #include "Heartbeat.hpp"
+#include "Msgeq7.hpp"
 #include "Led.hpp"
 #include "Rgb.hpp"
 
@@ -12,47 +13,26 @@
 Led red(D0);
 Led green(D1);
 Led blue(D2);
-#define FADESPEED 5
+
+Msgeq7 msgeq(A0, D3, D4);
 
 /* FUNCTIONS */
 
 /* SETUP */
 void setup() {
     Heartbeat::instance().start();
+
+    Serial.begin(9600);
+    Serial.println("Hello World!");
 }
 
 /* LOOP */
 void loop() {
 
-	int r, g, b;
-    // fade from blue to violet
-    for (r = 0; r < 256; r++) { 
-        red.setDuty(r);
-        delay(FADESPEED);
-    } 
-    // fade from violet to red
-    for (b = 255; b > 0; b--) { 
-        blue.setDuty(b);;
-        delay(FADESPEED);
-    } 
-    // fade from red to yellow
-    for (g = 0; g < 256; g++) { 
-        green.setDuty(g);
-        delay(FADESPEED);
-    } 
-    // fade from yellow to green
-    for (r = 255; r > 0; r--) { 
-        red.setDuty(r);;
-        delay(FADESPEED);
-    } 
-    // fade from green to teal
-    for (b = 0; b < 256; b++) { 
-        blue.setDuty(b);
-        delay(FADESPEED);
-    } 
-    // fade from teal to blue
-    for (g = 255; g > 0; g--) { 
-        green.setDuty(g);
-        delay(FADESPEED);
-    } 
+    Msgeq7::Spectrum s = msgeq.read();
+    Serial.printf("  63  160  400   1k 2.5k 6.2k  16k\n");
+    Serial.printf("%4d %4d %4d %4d %4d %4d %4d\n",
+        s[0], s[1], s[2], s[3], s[4], s[5], s[6]);
+
+    delay(100);
 }

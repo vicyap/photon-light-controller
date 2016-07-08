@@ -6,10 +6,12 @@ Color.hpp
 convert.hpp
 Heartbeat.hpp
 Led.hpp
+Msgeq7.hpp
 Rgb.hpp
 
 # CPP FILES
 convert.cpp
 Heartbeat.cpp
 Led.cpp
+Msgeq7.cpp
 Rgb.cpp
