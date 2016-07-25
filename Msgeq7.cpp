@@ -24,18 +24,16 @@ _resetPin(r)
 
     _spectrum = {0, 0, 0, 0, 0, 0, 0};
 
-    setADCSampleTime(ADC_SampleTime_480Cycles); // 480 cycles @ 120Mhz = 4 us
+    //setADCSampleTime(ADC_SampleTime_480Cycles); // 480 cycles @ 120Mhz = 4 us
 }
 
 const Msgeq7::Spectrum& Msgeq7::read() {
     // reset the output multiplexor
     digitalWrite(_resetPin, HIGH);
-    digitalWrite(_strobePin, HIGH);
-    delayMicroseconds(TS);
     digitalWrite(_resetPin, LOW);
 
     // Read each band
-    for (int i = 0; i < 7; ++i) {
+    for (int i = 0; i < NUM_FREQUENCY_BANDS; ++i) {
         digitalWrite(_strobePin, LOW);
         delayMicroseconds(TO);
         _spectrum[i] = analogRead(_analogPin);
