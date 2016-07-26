@@ -24,7 +24,9 @@ _resetPin(r)
 
     _spectrum = {0, 0, 0, 0, 0, 0, 0};
 
-    //setADCSampleTime(ADC_SampleTime_480Cycles); // 480 cycles @ 120Mhz = 4 us
+    setADCSampleTime(ADC_SampleTime_56Cycles);
+    // setADCSampleTime(ADC_SampleTime_144Cycles); // 144 cycles @ 120Mhz = 1.2 us
+    // setADCSampleTime(ADC_SampleTime_480Cycles); // 480 cycles @ 120Mhz = 4 us
 }
 
 const Msgeq7::Spectrum& Msgeq7::read() {
@@ -49,5 +51,4 @@ const Msgeq7::Spectrum& Msgeq7::read() {
 const Msgeq7::Spectrum& Msgeq7::readLast() const {
     return _spectrum;
 }
-
 
