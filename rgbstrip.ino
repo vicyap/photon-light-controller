@@ -31,15 +31,13 @@ void setup() {
 
     Serial.begin(9600);
     Serial.println("Hello World!");
+    Serial.printf("time,  63,  160,  400,   1k, 2.5k, 6.2k,  16k, whiteon\n");
 }
 
 /* LOOP */
 void loop() {
 
     Msgeq7::Spectrum s = msgeq.read();
-    Serial.printf("  63  160  400   1k 2.5k 6.2k  16k\n");
-    Serial.printf("%4d %4d %4d %4d %4d %4d %4d\n",
-        s[0], s[1], s[2], s[3], s[4], s[5], s[6]);
 
     std::array<double, 7> n;
 
@@ -50,9 +48,6 @@ void loop() {
     for (unsigned i = 0; i < 7; ++i) {
         n[i] = (s[i] / sum);
     }
-
-    Serial.printf("%1.3f %1.3f %1.3f %1.3f %1.3f %1.3f %1.3f\n",
-        n[0], n[1], n[2], n[3], n[4], n[5], n[6]);
 
     if (n[0] > THRESH || n[1] > THRESH) {
         int duty = (int) ((n[0] + n[1]) * 255);
@@ -78,7 +73,8 @@ void loop() {
         blue.off();
     }
 
-    if (sum > SUM_THRESH) {
+    bool whiteOn = sum > SUM_THRESH;
+    if (whiteOn) {
         white.on();
         red.off();
         green.off();
@@ -87,6 +83,6 @@ void loop() {
     else {
         white.off();
     }
-    Serial.printf("\n");
-
+    Serial.printf("%d,%4d,%4d,%4d,%4d,%4d,%4d,%4d,%d\n", micros(),
+        s[0], s[1], s[2], s[3], s[4], s[5], s[6], whiteOn);
 }
