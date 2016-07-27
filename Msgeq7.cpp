@@ -52,3 +52,26 @@ const Msgeq7::Spectrum& Msgeq7::readLast() const {
     return _spectrum;
 }
 
+Msgeq7Avg::Msgeq7Avg(int a, int s, int r, unsigned n) :
+Msgeq7::Msgeq7(a, s, r),
+_LEN(n)
+{
+    // read some values to preload the _spectrum
+    for (unsigned i = 0; i < _LEN; ++i) {
+        const Spectrum& nextVal = Msgeq7::read();
+        for (unsigned j = 0; j < Msgeq7::NUM_FREQUENCY_BANDS; ++j) {
+            _spectrum[j] += nextVal[j] / _LEN;
+        }
+    }
+}
+
+const Msgeq7::Spectrum& Msgeq7Avg::read() {
+    const Spectrum& nextVal = Msgeq7::read();
+   
+    // use _spectrum as the current average and update based on difference
+    for (unsigned i = 0; i < Msgeq7::NUM_FREQUENCY_BANDS; ++i) {
+        _spectrum[i] += (nextVal[i] - _spectrum[i]) / _LEN;
+    }
+
+    return _spectrum;
+}
