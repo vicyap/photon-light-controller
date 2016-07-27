@@ -9,7 +9,7 @@ class Msgeq7{
 
 public:
     const static int NUM_FREQUENCY_BANDS = 7;
-    typedef std::array<int, NUM_FREQUENCY_BANDS> Spectrum;
+    typedef std::array<unsigned int, NUM_FREQUENCY_BANDS> Spectrum;
 
     Msgeq7(int, int, int); // analog, strobe, reset
 

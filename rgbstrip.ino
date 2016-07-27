@@ -27,11 +27,21 @@ Msgeq7 msgeq(A0, D4, D5);
 void setup() {
     Heartbeat::instance().start();
 
-    white.strobeFreq(10);
+//    white.strobeFreq(10);
 
     Serial.begin(9600);
     Serial.println("Hello World!");
     Serial.printf("time,  63,  160,  400,   1k, 2.5k, 6.2k,  16k, whiteon\n");
+}
+
+#define L 4
+void interpolate(std::array<unsigned int, L*(Msgeq7::NUM_FREQUENCY_BANDS-1)>& ret, const Msgeq7::Spectrum& s) {
+    for (int i = 0; i < Msgeq7::NUM_FREQUENCY_BANDS - 1; ++i){
+        for (int j = 0; j < L; ++j) {
+            ret[i*L + j] = (s[i] * (L-j)) + (s[i+1] * j);
+            ret[i*L + j] /= L;
+        }
+    }
 }
 
 /* LOOP */
@@ -39,13 +49,14 @@ void loop() {
 
     Msgeq7::Spectrum s = msgeq.read();
 
-    std::array<double, 7> n;
+//    std::array<double, Msgeq7::NUM_FREQUENCY_BANDS> n;
 
+/*
     double sum = 0;
     for (const auto &t : s) {
         sum += t;
     }
-    for (unsigned i = 0; i < 7; ++i) {
+    for (unsigned i = 0; i < Msgeq7::NUM_FREQUENCY_BANDS; ++i) {
         n[i] = (s[i] / sum);
     }
 
@@ -83,6 +94,17 @@ void loop() {
     else {
         white.off();
     }
+
     Serial.printf("%d,%4d,%4d,%4d,%4d,%4d,%4d,%4d,%d\n", micros(),
         s[0], s[1], s[2], s[3], s[4], s[5], s[6], whiteOn);
+*/
+
+    std::array<unsigned int, L*(Msgeq7::NUM_FREQUENCY_BANDS-1)> interp;
+    interpolate(interp, s);
+
+    for (int i = 0; i < interp.size() - L; ++i){
+        Serial.printf("%5d", interp[i]);
+    }
+    Serial.println();
+    delay(100);
 }
