@@ -6,10 +6,10 @@
 class Led {
 public:
 
-	Led (int pin);
+    Led (int pin);
 
-	void setDuty(int);
-	void strobeFreq(double);
+    void setDuty(int);
+    void strobeFreq(double);
     void strobeOn();
     void strobeOff();
     
@@ -20,7 +20,7 @@ public:
 private:
     const static int SWITCH_FREQ = 2000;
     
-	int _pin;
+    int _pin;
     int _duty;
     bool _isOn;
     Timer _timer;
