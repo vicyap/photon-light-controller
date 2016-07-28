@@ -39,6 +39,9 @@ void loop() {
 
     Msgeq7::Spectrum s = msgeq.read();
 
+    int Ain = analogRead(A5);
+    double p = Ain / 4096.0;
+
     Msgeq7Utils::ISpectrum interp;
     Msgeq7Utils::interpolate(interp, s);
 
@@ -53,13 +56,17 @@ void loop() {
     int green_pwm = map(100 * Msgeq7Utils::areaMiddle(interp, Msgeq7Utils::L*2, Msgeq7Utils::L*4), 25, 100, 0, 100);
     int blue_pwm = map(100 * Msgeq7Utils::areaRight(interp, Msgeq7Utils::L*4), 25, 100, 0, 150);
 
+
+    red_pwm = map(max(s[0], s[1]), 1000, 4096, 0, 150);
+    green_pwm = map(max(s[2], s[3]), 1000, 4096, 0, 150);
+    blue_pwm = map(max(s[6], max(s[4], s[5])), 1000, 4096, 0, 150);
+
     unsigned total = 0;
-    for (const auto& i : interp) {
+    for (const auto& i : s) {
         total += i;
     }
 
-    double p = 0.75;
-    if (total > interp.size()*4096 * p) {
+    if (total > Msgeq7::NUM_FREQUENCY_BANDS * 4095 * p) {
         white.on();
         red.off();
         green.off();
@@ -72,5 +79,11 @@ void loop() {
         blue.setDuty(blue_pwm);
     }
 
-    Serial.printf("%4d%4d%4d\n", red_pwm, green_pwm, blue_pwm);
+    // Serial.printf("%4d%4d%4d\n", red_pwm, green_pwm, blue_pwm);
+    for (const auto& i : s) {
+       Serial.printf("%4d,", i);
+    }
+    Serial.printf("%4d,", Ain);
+    Serial.printf("%5d", total);
+    Serial.println();
 }
